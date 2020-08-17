@@ -1,1 +1,40 @@
-<p>products works!</p>
+<div class="container">
+  <h2>Add Product</h2>
+  <div class="row">
+    <form (submit)="addProduct()">
+      <div class="col s12 m4 input-field">
+        <input
+          placeholder="Product ID"
+          [(ngModel)]="prodId"
+          name="prodId"
+          required
+        />
+      </div>
+      <div class="col m4 input-field">
+        <input
+          placeholder="Product Name"
+          [(ngModel)]="prodName"
+          name="prodName"
+          required
+        />
+      </div>
+      <div class="col m3 input-field">
+        <input placeholder="Price" [(ngModel)]="price" name="price" required />
+      </div>
+      <div class="col m1">
+        <input type="submit" class="btn" value=" + " />
+      </div>
+    </form>
+  </div>
+
+  <hr />
+  <div class="row">
+    <table>
+      <tr *ngFor="let product of products">
+        <td>{{ product.prodId }}</td>
+        <td>{{ product.prodName }}</td>
+        <td>{{ product.price }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
