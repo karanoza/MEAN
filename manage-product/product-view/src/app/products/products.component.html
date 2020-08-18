@@ -22,7 +22,9 @@
         <input placeholder="Price" [(ngModel)]="price" name="price" required />
       </div>
       <div class="col m1">
-        <input type="submit" class="btn" value=" + " />
+        <ng-container *ngIf="op; then add; else update"></ng-container>
+
+        <!-- <input type="submit" class="btn" value=" + " /> -->
       </div>
     </form>
   </div>
@@ -34,7 +36,37 @@
         <td>{{ product.prodId }}</td>
         <td>{{ product.prodName }}</td>
         <td>{{ product.price }}</td>
+
+        <td>
+          <input
+            type="button"
+            (click)="editProduct(product)"
+            value=" Edit "
+            class="waves-effect waves-light btn right"
+          />
+        </td>
+        <td>
+          <input
+            type="button"
+            (click)="deleteProduct(product)"
+            value=" X "
+            class="waves-effect waves-light btn right"
+          />
+        </td>
       </tr>
     </table>
   </div>
 </div>
+
+<ng-template #add>
+  <input type="submit" class="btn" value=" + " />
+</ng-template>
+
+<ng-template #update>
+  <input
+    type="button"
+    (click)="updateProduct()"
+    value=" Update "
+    class="waves-effect waves-light btn right"
+  />
+</ng-template>

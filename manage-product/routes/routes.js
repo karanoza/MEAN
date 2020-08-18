@@ -28,25 +28,80 @@ router.post("/product", (req, res, next) => {
     price: req.body.price,
   });
 
+  // mongo
   newProduct.save((err, product) => {
     console.log("routes->save(): product : ", product);
     if (err) {
       res.json({ msg: "Failed to add Product" });
     } else {
-      res.json({ msg: "Product added successfully...!" });
+      //  'msg' for api testing
+      //  res.json({ msg: "Product added successfully...!" });
+
+      // or
+
+      // res new product with '_id'
+      res.json(product);
+
+      // or
+
+      // fetch all records for new updates
+      // Product.find(function (err, products) {
+      //   if (err) console.log("routes.js: err to 'find()' products : ", err);
+      //   res.json(products);
+      // });
     }
   });
 });
 
 // delete product
 router.delete("/product/:id", (req, res, next) => {
-  //logic to delete product
+  // logic to delete product
 
   Product.remove({ _id: req.params.id }, function (err, result) {
     if (err) {
       res.json(err);
     } else {
       res.json(result);
+    }
+  });
+});
+
+// update prod
+router.put("/product/:id", (req, res, next) => {
+  console.log("req", req.body);
+  // logic to update product
+
+  Product.findOne({ _id: req.params.id }, function (err, product) {
+    if (err) {
+      res.json(err);
+    } else {
+      product.prodId = req.body.prodId;
+      product.prodName = req.body.prodName;
+      product.price = req.body.price;
+
+      product.save((err, product) => {
+        console.log("findOne->save(): product : ", product);
+        if (err) {
+          res.json({ msg: "Failed to update Product" });
+        } else {
+          //  'msg' for api testing
+          //  res.json({ msg: "Product updated successfully...!" });
+
+          // or
+
+          // res updated product with '_id'
+          res.json(product);
+
+          // or
+
+          // fetch all records for new updates
+          // Product.find(function (err, products) {
+          //   if (err) console.log("routes.js: err to 'find()' products : ", err);
+          //   res.json(products);
+          // });
+        }
+      });
+      // res.json(product);
     }
   });
 });
